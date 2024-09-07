@@ -4,6 +4,8 @@ import com.periferia.mutant.dto.MutantDto;
 import com.periferia.mutant.service.MutantService;
 import com.periferia.mutant.utils.ApiResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,10 +25,15 @@ public class MutantController {
 
     @Operation(summary = "Nos permite validar si una cadena de ADN es mutante o es humana")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "El ADN entregado es un Mutante"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
-            @ApiResponse(responseCode = "403", description = "El ADN entregado es un Humano"),
-            @ApiResponse(responseCode = "404", description = "El ADN entregado ya fue verificado")
+            @ApiResponse(responseCode = "200", description = "El ADN entregado es un Mutante",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseUtil.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "El ADN entregado es un Humano",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "El ADN entregado ya fue verificado",
+                    content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/mutant")
     public ResponseEntity<ApiResponseUtil<Object>> mutant (@RequestBody @Valid  MutantDto mutantDto) {
@@ -35,9 +42,15 @@ public class MutantController {
 
     @Operation(summary = "Nos permite realizar el cálculo para obtener las estadísticas de todas las cadenas de ADN")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se entregan las estadísticas de todos los mutantes"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
-            @ApiResponse(responseCode = "404", description = "No existen cadenas de ADN para mostrar las estadísticas")
+            @ApiResponse(responseCode = "200", description = "El ADN entregado es un Mutante",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseUtil.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "El ADN entregado es un Humano",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "El ADN entregado ya fue verificado",
+                    content = @Content(mediaType = "application/json"))
     })
     @GetMapping("/status")
     public ResponseEntity<ApiResponseUtil<Object>> mutantStatus() {
