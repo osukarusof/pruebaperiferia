@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Builder
@@ -19,7 +21,8 @@ public class MutantEntity {
     private Long id;
 
     @Column(name = "secuencia_dna", nullable = false)
-    private String secuenciaDna;
+    @ElementCollection
+    private List<String> secuenciaDna;
 
     @Column(name = "es_mutante", nullable = false)
     private Boolean esMutante;
