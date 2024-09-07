@@ -13,17 +13,17 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "adn")
+@Table(name = "dna")
 public class MutantEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "secuencia_dna", nullable = false)
+    /*@Column(name = "secuencia_dna", nullable = false)
     @ElementCollection
     private List<String> secuenciaDna;
 
     @Column(name = "es_mutante", nullable = false)
-    private Boolean esMutante;
+    private Boolean esMutante;*/
 }

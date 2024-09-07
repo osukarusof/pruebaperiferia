@@ -3,6 +3,7 @@ package com.periferia.mutant.controller;
 import com.periferia.mutant.dto.MutantDto;
 import com.periferia.mutant.service.MutantService;
 import com.periferia.mutant.utils.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,9 @@ public class MutantController {
     private final MutantService mutantService;
 
     @PostMapping("/mutant")
-    public ResponseEntity<ApiResponse> mutant (@RequestBody MutantDto mutantDto) {
-        return new ResponseEntity<>(mutantService.mutant(mutantDto), HttpStatus.OK);
+    public ResponseEntity<ApiResponse<Object>> mutant (@RequestBody @Valid  MutantDto mutantDto) {
+        return  null;
+        //return new ResponseEntity<ApiResponse<Object>>(mutantService.mutant(mutantDto), HttpStatus.OK);
     }
 
     @GetMapping("/status")
