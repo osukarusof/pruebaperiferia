@@ -8,11 +8,10 @@ import com.periferia.mutant.exception.ForbiddenException;
 import com.periferia.mutant.exception.NotFoundException;
 import com.periferia.mutant.repository.MutantRepository;
 import com.periferia.mutant.service.MutantService;
-import com.periferia.mutant.utils.ApiResponse;
+import com.periferia.mutant.utils.ApiResponseUtil;
 import com.periferia.mutant.utils.MutantUtil;
 import com.periferia.mutant.utils.Util;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,7 +26,7 @@ public class MutantServiceImpl implements MutantService {
     private final Util util;
 
     @Override
-    public ApiResponse<Object> mutant (MutantDto mutantDto) {
+    public ApiResponseUtil<Object> mutant (MutantDto mutantDto) {
 
         String dnaJson = util.arrayConverToJson(mutantDto.getDna());
         Optional<MutantEntity> mutantOpt = mutantRepository.findByDnaSequence(dnaJson);
@@ -48,7 +47,7 @@ public class MutantServiceImpl implements MutantService {
     }
 
     @Override
-    public ApiResponse<Object> isMutant () {
+    public ApiResponseUtil<Object> isMutant () {
         Optional<IsMutantCalculate> isMutantCalculateOpt = mutantRepository.getMutantCalculate();
         if (isMutantCalculateOpt.isEmpty()) {
             throw new NotFoundException("There is no DNA to perform the calculations");

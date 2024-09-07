@@ -11,6 +11,7 @@ El proyecto tiene como objetivo desarrollar una solución en Java para detectar 
 - Mysql Database
 - JPA
 - Docker
+- Swagger
 
 # Requirimientos
 - Java 17

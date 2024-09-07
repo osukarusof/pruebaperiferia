@@ -22,9 +22,9 @@ public class Util {
         this.objectMapper =  objectMapper;
     }
 
-    public <T> ApiResponse<Object> mapaRespuesta (T data) {
+    public <T> ApiResponseUtil<Object> mapaRespuesta (T data) {
 
-        return ApiResponse.builder()
+        return ApiResponseUtil.builder()
                 .status(HttpStatus.OK.value())
                 .message("This sequence is a mutant")
                 .data(data)
