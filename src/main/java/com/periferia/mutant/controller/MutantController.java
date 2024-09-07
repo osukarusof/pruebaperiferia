@@ -22,7 +22,7 @@ public class MutantController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<ApiResponse> mutantStatus () {
+    public ResponseEntity<ApiResponse<Object>> mutantStatus () {
         return new ResponseEntity<>(mutantService.isMutant(), HttpStatus.OK);
     }
 }

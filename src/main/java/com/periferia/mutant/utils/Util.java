@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class Util {
@@ -18,6 +20,16 @@ public class Util {
     public Util(ModelMapper modelMapper, ObjectMapper objectMapper) {
         this.modelMapper = modelMapper;
         this.objectMapper =  objectMapper;
+    }
+
+    public <T> ApiResponse<Object> mapaRespuesta (T data) {
+
+        return ApiResponse.builder()
+                .status(HttpStatus.OK.value())
+                .message("This sequence is a mutant")
+                .data(data)
+                .fieldErrors(new ArrayList<>())
+                .build();
     }
 
     public <T> T convertTo(Object origen, Class<T> destino) {

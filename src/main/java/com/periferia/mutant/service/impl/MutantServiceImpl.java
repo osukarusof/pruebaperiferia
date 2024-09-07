@@ -1,5 +1,7 @@
 package com.periferia.mutant.service.impl;
 
+import com.periferia.mutant.dto.IsMutantCalculate;
+import com.periferia.mutant.dto.IsMutantDto;
 import com.periferia.mutant.dto.MutantDto;
 import com.periferia.mutant.entity.MutantEntity;
 import com.periferia.mutant.exception.ForbiddenException;
@@ -36,17 +38,22 @@ public class MutantServiceImpl implements MutantService {
         MutantEntity mutantEntity = util.convertTo(mutantDto, MutantEntity.class);
         Boolean isMutant = mutantUtil.isMutantValid(mutantDto.getDna());
         mutantEntity.setIsMutant(isMutant);
-        mutantRepository.save(mutantEntity);
+        MutantEntity mutantSave = mutantRepository.save(mutantEntity);
 
         if (!isMutant) {
             throw  new ForbiddenException("This sequence is not a mutant");
         }
 
-        return ApiResponse.builder().status(HttpStatus.OK.value()).message("This sequence is a mutant").build();
+        return util.mapaRespuesta(util.convertTo(mutantSave, MutantDto.class));
     }
 
     @Override
-    public ApiResponse isMutant () {
-        return null;
+    public ApiResponse<Object> isMutant () {
+        Optional<IsMutantCalculate> isMutantCalculateOpt = mutantRepository.getMutantCalculate();
+        if (isMutantCalculateOpt.isEmpty()) {
+            throw new NotFoundException("There is no DNA to perform the calculations");
+        }
+
+        return util.mapaRespuesta(util.convertTo(isMutantCalculateOpt.get(), IsMutantDto.class));
     }
 }
