@@ -18,8 +18,7 @@ public class MutantController {
 
     @PostMapping("/mutant")
     public ResponseEntity<ApiResponse<Object>> mutant (@RequestBody @Valid  MutantDto mutantDto) {
-        return  null;
-        //return new ResponseEntity<ApiResponse<Object>>(mutantService.mutant(mutantDto), HttpStatus.OK);
+        return new ResponseEntity<ApiResponse<Object>>(mutantService.mutant(mutantDto), HttpStatus.OK);
     }
 
     @GetMapping("/status")

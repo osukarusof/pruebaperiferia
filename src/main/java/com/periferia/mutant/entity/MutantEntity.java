@@ -1,12 +1,11 @@
 package com.periferia.mutant.entity;
 
+import com.periferia.mutant.utils.DnaSequenceArrayConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -20,10 +19,10 @@ public class MutantEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    /*@Column(name = "secuencia_dna", nullable = false)
-    @ElementCollection
-    private List<String> secuenciaDna;
+    @Column(name = "dna_sequence", nullable = false, unique = true)
+    @Convert(converter = DnaSequenceArrayConverter.class)
+    private String[] dna;
 
-    @Column(name = "es_mutante", nullable = false)
-    private Boolean esMutante;*/
+    @Column(name = "is_mutant", nullable = false)
+    private Boolean isMutant;
 }

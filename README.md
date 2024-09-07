@@ -57,8 +57,8 @@ Una vez que los contenedores estén funcionando, puedes acceder a la aplicación
 >```sql
 > CREATE TABLE adn (
 > id INT AUTO_INCREMENT PRIMARY KEY,
-> secuencia_dna JSON NOT NULL,
-> es_mutante BOOLEAN NOT NULL
+> dna_sequence JSON NOT NULL,
+> is_mutant BOOLEAN NOT NULL
 >);
 >```
 >

@@ -10,12 +10,43 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
+
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ApiResponse<Object>> handleNotFoundException (NotFoundException ex){
+        ApiResponse<Object> responseDto = ApiResponse
+                .builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .message(ex.getMessage())
+                .data(new ArrayList<>())
+                .fieldErrors(new ArrayList<>())
+                .build();
+        return new ResponseEntity<ApiResponse<Object>>(responseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ApiResponse<Object>> handleForbiddenException(ForbiddenException ex) {
+
+        ApiResponse<Object> responseDto = ApiResponse
+                .builder()
+                .status(HttpStatus.FORBIDDEN.value())
+                .message(ex.getMessage())
+                .data(new ArrayList<>())
+                .fieldErrors(new ArrayList<>())
+                .build();
+
+        return new ResponseEntity<>(responseDto, HttpStatus.FORBIDDEN);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -32,6 +63,7 @@ public class GlobalExceptionHandler {
                 .builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .message("Validation failed. Check the request parameters.")
+                .data(new ArrayList<>())
                 .fieldErrors(errorResponse)
                 .build();
 
