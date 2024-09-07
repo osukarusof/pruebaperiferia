@@ -33,12 +33,15 @@ jobs:
       - name: Generate coverage report with JaCoCo
         run: mvn jacoco:report
 
+      - name: Print JaCoCo report
+        run: cat target/site/jacoco/jacoco.xml
+
       - name: Check coverage threshold
         id: coverage
         run: |
-          # Extract the coverage percentages from the JaCoCo report
-          COVERED=$(grep '<counter type="INSTRUCTION" covered=' target/site/jacoco/jacoco.xml | head -1 | grep -oP '(?<=covered=")[0-9]+')
-          MISSED=$(grep '<counter type="INSTRUCTION" missed=' target/site/jacoco/jacoco.xml | head -1 | grep -oP '(?<=missed=")[0-9]+')
+          # Extract the coverage data from the JaCoCo report using xmllint
+          COVERED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@covered)" target/site/jacoco/jacoco.xml)
+          MISSED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@missed)" target/site/jacoco/jacoco.xml)
           
           if [ -z "$COVERED" ] || [ -z "$MISSED" ]; then
             echo "Coverage data not found in JaCoCo report"
