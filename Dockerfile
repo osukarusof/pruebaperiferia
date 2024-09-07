@@ -1,5 +1,5 @@
-# Usa una imagen base con Java 17
-FROM openjdk:17-jdk-slim
+# Usa una imagen base con Temurin JDK 17
+FROM eclipse-temurin:17-jdk-alpine
 
 # Copia el JAR construido al contenedor
 COPY target/mutant.jar /app/mutant-application.jar

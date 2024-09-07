@@ -5,52 +5,47 @@ import org.springframework.stereotype.Component;
 @Component
 public class MutantUtil {
 
-    private static final Long MUTANT_SECUENCE_LENG = 4L;
-    private static int[][] DETECT_DIRECTIO = {
-            {0,1},
-            {1,0},
-            {1,1},
-            {1,-1}
+    private static final int MUTANT_SEQUENCE_LENGTH = 4;
+    private static final int[][] DETECT_DIRECTION = {
+            {0, 1},   // Horizontal
+            {1, 0},   // Vertical
+            {1, 1},   // Diagonal principal
+            {1, -1}   // Diagonal secundaria
     };
 
-    public Boolean isMutantValid (String[] dna) {
+    public boolean isMutantValid(String[] dna) {
         int sizeAdn = dna.length;
-        int sequenceControl = 0;
+        int sequenceCount = 0;
 
         for (int i = 0; i < sizeAdn; i++) {
             for (int j = 0; j < sizeAdn; j++) {
-                if (dna[i].charAt(j) != '\0') {
-                    for (int[] direction : DETECT_DIRECTIO) {
-                        if (isSequence(dna, i, j, direction)) {
-                            sequenceControl++;
-                            if (sequenceControl > 1) {
-                                return  true;
-                            }
+                for (int[] direction : DETECT_DIRECTION) {
+                    if (isSequence(dna, i, j, direction)) {
+                        sequenceCount++;
+                        if (sequenceCount >= 2) {
+                            return true;
                         }
                     }
                 }
             }
         }
-
-        return true;
+        return false;
     }
 
-    private Boolean isSequence (String[] dna, int row, int col, int[] direction) {
-
+    private boolean isSequence(String[] dna, int row, int col, int[] direction) {
         char baseLetter = dna[row].charAt(col);
         int newRow, newCol;
 
-        for (int i = 1; i < MUTANT_SECUENCE_LENG; i++) {
-
+        for (int i = 1; i < MUTANT_SEQUENCE_LENGTH; i++) {
             newRow = row + i * direction[0];
             newCol = col + i * direction[1];
 
             if (newRow >= dna.length || newRow < 0 || newCol >= dna.length || newCol < 0) {
-                return false;  // Si estamos fuera de los límites de la matriz
+                return false;
             }
 
             if (dna[newRow].charAt(newCol) != baseLetter) {
-                return false;  // Si las letras no coinciden, no es una secuencia
+                return false;
             }
         }
 

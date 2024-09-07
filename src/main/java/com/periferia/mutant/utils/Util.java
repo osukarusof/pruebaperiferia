@@ -2,6 +2,7 @@ package com.periferia.mutant.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,16 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Component
+@RequiredArgsConstructor
 public class Util {
 
     private final ModelMapper modelMapper;
     private final ObjectMapper objectMapper;
-
-    @Autowired
-    public Util(ModelMapper modelMapper, ObjectMapper objectMapper) {
-        this.modelMapper = modelMapper;
-        this.objectMapper =  objectMapper;
-    }
 
     public <T> ApiResponseUtil<Object> mapaRespuesta (T data) {
 
