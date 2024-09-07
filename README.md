@@ -1,8 +1,8 @@
 <div align="center">
-    <img src="https://download.logo.wine/logo/Spring_Framework/Spring_Framework-Logo.wine.png" width="300" alt="spring boot" />
+    <img src="https://download.logo.wine/logo/Spring_Framework/Spring_Framework-Logo.wine.png" width="250" alt="spring boot" />
 </div>
 
-El proyecto detectará si una persona es mutante mediante un método que analiza secuencias de ADN en una matriz NxN. Identificará mutantes si encuentra más de una secuencia de cuatro letras iguales en forma horizontal, vertical u oblicua. Se desarrollará en Java
+El proyecto tiene como objetivo desarrollar una solución en Java para detectar si una persona es mutante, analizando secuencias de ADN representadas en una matriz de NxN. El algoritmo verificará si existen más de una secuencia de cuatro letras iguales consecutivas en las direcciones horizontal, vertical u oblicua. Si se cumplen estos criterios, la persona será clasificada como mutante. La solución se implementará utilizando Spring Boot para la API y una base de datos asociada para almacenar y gestionar la información.
 
 # Tecnologias
 - Java
@@ -20,7 +20,6 @@ El proyecto detectará si una persona es mutante mediante un método que analiza
 # Prerrequisitos
 
 * Docker: Asegúrate de tener Docker y Docker Compose instalados en tu máquina. Puedes descargar Docker desde aquí e instalar Docker Compose siguiendo las instrucciones oficiales.
-
 
 # Guía para Ejecutar la Aplicación
 
@@ -54,6 +53,16 @@ Asegúrate de reemplazar /ruta/a/tu/proyecto con la ruta real a tu directorio de
 
 Una vez que los contenedores estén funcionando, puedes acceder a la aplicación Spring Boot
 
+1. Ejecute el siguiente *script* para el debido funcionamiento de la aplicación
+>```sql
+> CREATE TABLE adn (
+> id INT AUTO_INCREMENT PRIMARY KEY,
+> secuencia_dna JSON NOT NULL,
+> es_mutante BOOLEAN NOT NULL
+>);
+>```
+>
+2. Para acceder a la aplicación ingresa al siguiente enlace 
 >```http request
 >GET http://localhost:8080
 >```
