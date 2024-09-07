@@ -28,7 +28,7 @@ jobs:
         run: mvn clean install
 
       - name: Run tests with Maven
-        run: mvn test
+        run: mvn verify
 
       - name: Generate coverage report with JaCoCo
         run: mvn jacoco:report
