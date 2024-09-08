@@ -57,7 +57,7 @@ jobs:
           echo "Coverage Percentage: $COVERAGE_PERCENT%"
 
           # Check if coverage is above the threshold
-          if [ "$COVERAGE_PERCENT" -lt 50 ]; then
+          if [ "$COVERAGE_PERCENT" -lt 80 ]; then
             echo "Coverage is below 50%. Current coverage: $COVERAGE_PERCENT%"
             exit 1
           else
