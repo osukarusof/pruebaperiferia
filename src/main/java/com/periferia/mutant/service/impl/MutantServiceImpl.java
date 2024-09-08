@@ -12,6 +12,10 @@ import com.periferia.mutant.utils.ApiResponseUtil;
 import com.periferia.mutant.utils.MutantUtil;
 import com.periferia.mutant.utils.Util;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,12 +24,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MutantServiceImpl implements MutantService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MutantServiceImpl.class);
+
     private final MutantRepository mutantRepository;
 
     private  final MutantUtil mutantUtil;
     private final Util util;
 
     @Override
+    @CacheEvict(value = "mutantStats", allEntries = true)
     public ApiResponseUtil<Object> mutant (MutantDto mutantDto) {
 
         String dnaJson = util.arrayConverToJson(mutantDto.getDna());
@@ -50,7 +57,10 @@ public class MutantServiceImpl implements MutantService {
     }
 
     @Override
+    @Cacheable("mutantStats")
     public ApiResponseUtil<Object> isMutant () {
+
+        logger.info("isMutant method called, cache is being used");
         Optional<IsMutantCalculate> isMutantCalculateOpt = mutantRepository.getMutantCalculate();
         if (isMutantCalculateOpt.isEmpty()) {
             throw new NotFoundException("There is no DNA to perform the calculations");
