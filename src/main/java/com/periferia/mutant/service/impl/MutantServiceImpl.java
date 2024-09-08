@@ -34,16 +34,19 @@ public class MutantServiceImpl implements MutantService {
             throw new NotFoundException("This DNA sequence has already been used");
         }
 
-        MutantEntity mutantEntity = util.convertTo(mutantDto, MutantEntity.class);
         Boolean isMutant = mutantUtil.isMutantValid(mutantDto.getDna());
-        mutantEntity.setIsMutant(isMutant);
-        MutantEntity mutantSave = mutantRepository.save(mutantEntity);
+
+        mutantRepository.save(MutantEntity
+                .builder()
+                .dnaSequence(dnaJson)
+                .isMutant(isMutant)
+                .build());
 
         if (!isMutant) {
             throw  new ForbiddenException("This sequence is not a mutant");
         }
 
-        return util.mapaRespuesta(util.convertTo(mutantSave, MutantDto.class));
+        return util.mapaRespuesta(MutantDto.builder().dna(util.jsonConverToArray(dnaJson)).build());
     }
 
     @Override

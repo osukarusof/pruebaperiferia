@@ -40,7 +40,6 @@ public class Util {
         }
     }
 
-
     public String[] jsonConverToArray (String dbData) {
         try {
             return dbData != null && !dbData.isEmpty() ? objectMapper.readValue(dbData, String[].class) : new String[0];

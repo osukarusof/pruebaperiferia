@@ -65,7 +65,8 @@ public class MutantServiceTest {
         String[] dna = { "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG" };
         MutantDto body = MutantDto.builder().dna(dna).build();
         when(mutantRepository.save(any())).thenReturn(mutantEntity);
-        assertEquals(util.mapaRespuesta(util.convertTo(mutantEntity, MutantDto.class)), mutantService.mutant(body));
+        String dnaJson = util.arrayConverToJson(dna);
+        assertEquals(util.mapaRespuesta(MutantDto.builder().dna(util.jsonConverToArray(dnaJson)).build()), mutantService.mutant(body));
     }
 
     @Test
@@ -103,7 +104,7 @@ public class MutantServiceTest {
         String[] dna = { "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG" };
         mutantEntity  = MutantEntity
                 .builder()
-                .dna(dna)
+                .dnaSequence(util.arrayConverToJson(dna))
                 .isMutant(true)
                 .build();
     }
