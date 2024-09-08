@@ -56,13 +56,14 @@ Una vez que los contenedores estén funcionando, puedes acceder a la aplicación
 
 1. Ejecute el siguiente *script* para el debido funcionamiento de la aplicación
 >```sql
-> CREATE TABLE adn (
-> id INT AUTO_INCREMENT PRIMARY KEY,
-> dna_sequence JSON NOT NULL,
-> is_mutant BOOLEAN NOT NULL
+>CREATE TABLE dna(
+>id BIGINT AUTO_INCREMENT PRIMARY KEY,
+>dna_sequence TEXT NOT NULL,
+>is_mutant TINYINT(1) NOT NULL,
+>CONSTRAINT unique_dna_sequence UNIQUE (dna_sequence)
 >);
 >```
->
+
 2. Para acceder a la aplicación ingresa al siguiente enlace 
 >```http request
 >GET http://localhost:8080
