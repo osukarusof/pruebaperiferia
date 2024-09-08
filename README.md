@@ -4,6 +4,8 @@
 
 El proyecto tiene como objetivo desarrollar una solución en Java para detectar si una persona es mutante, analizando secuencias de ADN representadas en una matriz de NxN. El algoritmo verificará si existen más de una secuencia de cuatro letras iguales consecutivas en las direcciones horizontal, vertical u oblicua. Si se cumplen estos criterios, la persona será clasificada como mutante. La solución se implementará utilizando Spring Boot para la API y una base de datos asociada para almacenar y gestionar la información.
 
+En el siguiente enlace se encuentra la [solución](EXPLICACION.md) de este ejercicio.
+
 # Tecnologias
 - Java
 - Maven
