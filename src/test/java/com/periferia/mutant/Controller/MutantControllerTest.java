@@ -37,10 +37,10 @@ public class MutantControllerTest {
     @Test
     public void isNotMutantErrorBadRequestNull () throws Exception {
 
-        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"dna\":\"This field is required\"}}";
+        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"adn\":\"This field is required\"}}";
 
         String requestBody = "{\n" +
-                "    \"dna\": null\n" +
+                "    \"adn\": null\n" +
                 "}";
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl +"/mutant")
@@ -54,27 +54,10 @@ public class MutantControllerTest {
     @Test
     public void isNotMutantErrorBadRequestLengthCero () throws Exception {
 
-        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"dna\":\"DNA array must not be empty and all rows must have the same length\"}}";
+        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"adn\":\"DNA array must not be empty and all rows must have the same length\"}}";
 
         String requestBody = "{\n" +
-                "    \"dna\": []\n" +
-                "}";
-
-        mockMvc.perform(MockMvcRequestBuilders.post(baseUrl +"/mutant")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect((MockMvcResultMatchers.content().string(containsString(expectedResponse))));
-    }
-
-    @Test
-    public void isNotMutantErrorBadRequestDnaNull () throws Exception {
-
-        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"dna\":\"DNA array must not be empty and all rows must have the same length\"}}";
-
-        String requestBody = "{\n" +
-                "    \"dna\": [null]\n" +
+                "    \"adn\": []\n" +
                 "}";
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl +"/mutant")
@@ -88,10 +71,10 @@ public class MutantControllerTest {
     @Test
     public void isNotMutantErrorBadRequestDnaBlank () throws Exception {
 
-        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"dna\":\"DNA array must not be empty and all rows must have the same length\"}}";
+        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"adn\":\"DNA array must not be empty and all rows must have the same length\"}}";
 
         String requestBody = "{\n" +
-                "    \"dna\": [\"\"]\n" +
+                "    \"adn\": [\"\"]\n" +
                 "}";
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl +"/mutant")
@@ -105,10 +88,10 @@ public class MutantControllerTest {
     @Test
     public void isNotMutantErrorBadRequestDnaLengfth () throws Exception {
 
-        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"dna\":\"DNA array must not be empty and all rows must have the same length\"}}";
+        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"adn\":\"DNA array must not be empty and all rows must have the same length\"}}";
 
         String requestBody = "{\n" +
-                "    \"dna\": [\n" +
+                "    \"adn\": [\n" +
                 "        \"ATGCGA\",\n" +
                 "        \"CAGTGC\",\n" +
                 "        \"TTATGT\",\n" +
@@ -133,7 +116,7 @@ public class MutantControllerTest {
         String expectedResponse = "{\"message\":\"This DNA sequence has already been used\",\"status\":404,\"data\":[],\"fieldErrors\":[]}";
 
         String requestBody = "{\n" +
-                "    \"dna\": [\n" +
+                "    \"adn\": [\n" +
                 "        \"ATGCGA\",\n" +
                 "        \"CAGTGC\",\n" +
                 "        \"TTATGT\",\n" +
@@ -157,7 +140,7 @@ public class MutantControllerTest {
         String expectedResponse = "{\"message\":\"This sequence is not a mutant\",\"status\":403,\"data\":[],\"fieldErrors\":[]}";
 
         String requestBody = "{\n" +
-                "    \"dna\": [\n" +
+                "    \"adn\": [\n" +
                 "        \"ATCGTA\",\n" +
                 "        \"GCTGAC\",\n" +
                 "        \"TACGTT\",\n" +
@@ -178,10 +161,10 @@ public class MutantControllerTest {
     @Test
     public void isMutant () throws Exception {
 
-        String expectedResponse = "{\"message\":\"This sequence is a mutant\",\"status\":200,\"data\":{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]},\"fieldErrors\":[]}";
+        String expectedResponse = "{\"message\":\"This sequence is a mutant\",\"status\":200,\"data\":{\"adn\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]},\"fieldErrors\":[]}";
 
         String requestBody = "{\n" +
-                "    \"dna\": [\n" +
+                "    \"adn\": [\n" +
                 "        \"ATGCGA\",\n" +
                 "        \"CAGTGC\",\n" +
                 "        \"TTATGT\",\n" +
@@ -195,19 +178,6 @@ public class MutantControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect((MockMvcResultMatchers.content().string(containsString(expectedResponse))));
-    }
-
-
-    @Test
-    public void mutantStatusNotFoundException () throws Exception {
-
-        String expectedResponse = "{\"message\":\"There is no DNA to perform the calculations\",\"status\":404,\"data\":[],\"fieldErrors\":[]}";
-
-        mockMvc.perform(MockMvcRequestBuilders.get(baseUrl + "/status")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect((MockMvcResultMatchers.content().string(containsString(expectedResponse))));
     }

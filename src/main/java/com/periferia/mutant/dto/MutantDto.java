@@ -19,5 +19,5 @@ public class MutantDto {
     @NotNull(message = "This field is required")
     @ValidDna(message = "DNA array must not be empty and all rows must have the same length")
     @Schema(description = "Contendrá la cadena de ADN para ser validada", example = "[\"ATGCGA\", \"CAGTGC\", \"TTATGT\", \"AGAAGG\", \"CCCCTA\", \"TCACTG\"]")
-    private String[] dna;
+    private String[] adn;
 }

@@ -58,11 +58,12 @@ Una vez que los contenedores estén funcionando, puedes acceder a la aplicación
 
 1. Ejecute el siguiente *script* para el debido funcionamiento de la aplicación
 >```sql
->CREATE TABLE dna(
+>CREATE TABLE adn(
 >id BIGINT AUTO_INCREMENT PRIMARY KEY,
->dna_sequence TEXT NOT NULL,
+>adn_sequence TEXT NOT NULL,
 >is_mutant TINYINT(1) NOT NULL,
->CONSTRAINT unique_dna_sequence UNIQUE (dna_sequence)
+>CONSTRAINT unique_adn_sequence UNIQUE (adn_sequence),
+>CONSTRAINT unique_is_mutant UNIQUE (is_mutant)
 >);
 >```
 

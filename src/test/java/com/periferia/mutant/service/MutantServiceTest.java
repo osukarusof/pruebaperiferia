@@ -46,7 +46,7 @@ public class MutantServiceTest {
         insertDb();
         when(mutantRepository.findByDnaSequence(anyString())).thenReturn(Optional.of(mutantEntity));
         String[] dna = { "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG" };
-        MutantDto body = MutantDto.builder().dna(dna).build();
+        MutantDto body = MutantDto.builder().adn(dna).build();
         assertThrows(NotFoundException.class, () -> mutantService.isMutant(body));
     }
 
@@ -54,7 +54,7 @@ public class MutantServiceTest {
     public void  isMutantNotMutantErrorForbiddenException () {
         when(mutantRepository.findByDnaSequence(anyString())).thenReturn(Optional.empty());
         String[] dna = {"ATCGTA", "GCTGAC", "TACGTT", "CGTACG", "AGCTGA", "TGATCG"};
-        MutantDto body = MutantDto.builder().dna(dna).build();
+        MutantDto body = MutantDto.builder().adn(dna).build();
         assertThrows(ForbiddenException.class, () -> mutantService.isMutant(body));
     }
 
@@ -63,10 +63,10 @@ public class MutantServiceTest {
         insertDb();
         when(mutantRepository.findByDnaSequence(anyString())).thenReturn(Optional.empty());
         String[] dna = { "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG" };
-        MutantDto body = MutantDto.builder().dna(dna).build();
+        MutantDto body = MutantDto.builder().adn(dna).build();
         when(mutantRepository.save(any())).thenReturn(mutantEntity);
         String dnaJson = util.arrayConverToJson(dna);
-        assertEquals(util.mapaRespuesta(MutantDto.builder().dna(util.jsonConverToArray(dnaJson)).build()), mutantService.isMutant(body));
+        assertEquals(util.mapaRespuesta(MutantDto.builder().adn(util.jsonConverToArray(dnaJson)).build()), mutantService.isMutant(body));
     }
 
     @Test

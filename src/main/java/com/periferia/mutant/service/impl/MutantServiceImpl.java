@@ -35,13 +35,13 @@ public class MutantServiceImpl implements MutantService {
     @CacheEvict(value = "mutantStats", allEntries = true)
     public ApiResponseUtil<Object> isMutant (MutantDto mutantDto) {
 
-        String dnaJson = util.arrayConverToJson(mutantDto.getDna());
+        String dnaJson = util.arrayConverToJson(mutantDto.getAdn());
         Optional<MutantEntity> mutantOpt = mutantRepository.findByDnaSequence(dnaJson);
         if (mutantOpt.isPresent()) {
             throw new NotFoundException("This DNA sequence has already been used");
         }
 
-        Boolean isMutant = mutantUtil.isMutantValid(mutantDto.getDna());
+        Boolean isMutant = mutantUtil.isMutantValid(mutantDto.getAdn());
 
         mutantRepository.save(MutantEntity
                 .builder()
@@ -53,7 +53,7 @@ public class MutantServiceImpl implements MutantService {
             throw  new ForbiddenException("This sequence is not a mutant");
         }
 
-        return util.mapaRespuesta(MutantDto.builder().dna(util.jsonConverToArray(dnaJson)).build());
+        return util.mapaRespuesta(MutantDto.builder().adn(util.jsonConverToArray(dnaJson)).build());
     }
 
     @Override

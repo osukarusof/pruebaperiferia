@@ -18,6 +18,50 @@ Este programa debe analizar una secuencia de ADN representada como una matriz Nx
 |  C  |  C  |  C  |  C  |  T  |  A  |
 |  T  |  C  |  A  |  C  |  T  |  G  |
 
+1. Patrón de secuencias mutantes 
+El objetivo es detectar secuencias de cuatro letras consecutivas que sean iguales en:
+
+* Horizontal: Las letras están consecutivas en una misma fila.
+* Vertical: Las letras están consecutivas en una misma columna.
+* Diagonal: Las letras están consecutivas en una diagonal, ya sea de izquierda a derecha (descendente) o de derecha a izquierda (ascendente).
+
+2. Tipos de detecciones
+* Horizontal: Buscar secuencias en una sola fila de cuatro letras idénticas consecutivas. 
+  * Ejemplo:
+  
+| A | A | A | A |
+|---|---|---|---|
+| . | . | . | . |
+| . | . | . | . |
+| . | . | . | . |
+
+* Vertical: Buscar secuencias en una sola columna. Esto significa que en diferentes filas, en la misma columna, encuentras la misma letra repetida cuatro veces consecutivas.
+  * Ejemplo:
+  
+| A   | . | . | . |
+| --- |---|---|---|
+| A   | . | . | . |
+| A   | . | . | . |
+| A   | . | . | . |
+
+* Diagonal descendente (de arriba a la izquierda hacia abajo a la derecha): Las letras idénticas deben estar en diferentes filas y columnas pero consecutivas diagonalmente.
+  * Ejemplo
+
+| A | . | . | . |
+|---|---|---|---|
+| . | A | . | . |
+| . | . | A | . |
+| . | . | . | A |
+
+* Diagonal ascendente (de abajo a la izquierda hacia arriba a la derecha):
+  * Ejemplo
+
+| . | . | . | A |
+|---|---|---|---|
+| . | . | A | . |
+| . | A | . | . |
+| A | . | . | . |
+
 ### Solución en Java
 
 * Se crea una clase llamada *MutantUtil*, está diseñada para determinar si una secuencia de ADN pertenece a un mutante, según un criterio específico. A continuación, te explico cada parte:
@@ -319,4 +363,38 @@ En el servicio MutantService, implementarás la lógica para obtener el número 
 > },
 > "fieldErrors": []
 >}
+>```
+
+### 3. Desafío 3: Base de datos
+
+Debes crear una base de datos que almacene las secuencias de `ADN` y si la persona es mutante o no.
+
+* Modelo entidad-relación
+
+El modelo de base de datos incluirá una tabla simple para almacenar la secuencia de ADN y un campo booleano que indica si es mutante.
+
+#### Tabla: ADN
+La información genética se almacena en la tabla `ADN` de la base de datos, la cual tiene las siguientes columnas:
+
+- `id`: Identificador único de cada registro.
+- `dna_sequence`: Secuencia de ADN representada como un array de strings.
+- `is_mutant`: Indica si la secuencia pertenece a un mutante (`1`) o no (`0`)
+
+* Ejemplo de Datos Almacenados
+
+| id | dna_sequence          | is_mutant |
+|:--:|:---------------------:|:---------:|
+| 1  | ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"] | 1         |
+| 2  | ["ATGCGA", "CAGTGC", "TTATTT", "AGACGG", "GCGTCA", "TCACTG"] | 0 |
+
+
+* Script de base de datos en SQL
+>```sql
+>CREATE TABLE adn(
+>id BIGINT AUTO_INCREMENT PRIMARY KEY,
+>adn_sequence TEXT NOT NULL,
+>is_mutant TINYINT(1) NOT NULL,
+>CONSTRAINT unique_ada_sequence UNIQUE (adn_sequence),
+>CONSTRAINT unique_is_mutant UNIQUE (is_mutant)
+>);
 >```
