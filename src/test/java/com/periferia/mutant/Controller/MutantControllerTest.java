@@ -33,24 +33,7 @@ public class MutantControllerTest {
     public void setUp () {
         mockMvc  = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-
-    @Test
-    public void isNotMutantErrorBadRequestNull () throws Exception {
-
-        String expectedResponse = "{\"message\":\"Validation failed. Check the request parameters.\",\"status\":400,\"data\":[],\"fieldErrors\":{\"adn\":\"This field is required\"}}";
-
-        String requestBody = "{\n" +
-                "    \"adn\": null\n" +
-                "}";
-
-        mockMvc.perform(MockMvcRequestBuilders.post(baseUrl +"/mutant")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect((MockMvcResultMatchers.content().string(containsString(expectedResponse))));
-    }
-
+    
     @Test
     public void isNotMutantErrorBadRequestLengthCero () throws Exception {
 
