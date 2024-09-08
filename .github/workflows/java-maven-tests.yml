@@ -39,12 +39,15 @@ jobs:
       - name: Print JaCoCo report
         run: cat target/site/jacoco/jacoco.xml
 
-      - name: Check coverage threshold
+      - name: Extract coverage values
         id: coverage
         run: |
           # Extract the coverage data from the JaCoCo report using xmllint
           COVERED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@covered)" target/site/jacoco/jacoco.xml)
           MISSED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@missed)" target/site/jacoco/jacoco.xml)
+          
+          echo "Covered: $COVERED"
+          echo "Missed: $MISSED"
           
           if [ -z "$COVERED" ] || [ -z "$MISSED" ]; then
             echo "Coverage data not found in JaCoCo report"
