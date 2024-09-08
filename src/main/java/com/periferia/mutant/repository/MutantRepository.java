@@ -18,11 +18,9 @@ public interface MutantRepository extends JpaRepository<MutantEntity, Long> {
     @Query("select " +
             "sum(case when m.isMutant = true then 1 else 0 end) as countMutantDna, " +
             "sum(case when m.isMutant = false then 1 else 0 end) as countHumanDna, " +
-            "case when sum(case when m.isMutant = false then 1 else 0 end) = 0 " +
-            "then 0 else " +
-            "sum(case when m.isMutant = true then 1 else 0 end) / " +
-            "sum(case when m.isMutant = false then 1 else 0 end) " +
-            "end as ratio " +
-            "from MutantEntity m")
+            "coalesce(sum(case when m.isMutant = true then 1 else 0 end) / nullif(sum(case when m.isMutant = false then 1 else 0 end), 0), 0) as ratio " +
+            "from MutantEntity m " +
+            "group by m.isMutant " +
+            "having sum(case when m.isMutant = true then 1 else 0 end) > 0 or sum(case when m.isMutant = false then 1 else 0 end) > 0")
     Optional<IsMutantCalculate> getMutantCalculate();
 }
