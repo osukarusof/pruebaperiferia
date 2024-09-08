@@ -28,10 +28,13 @@ jobs:
         run: mvn clean install
 
       - name: Run tests with Maven
-        run: mvn verify
+        run: mvn test
 
       - name: Generate coverage report with JaCoCo
         run: mvn jacoco:report
+
+      - name: Install xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
 
       - name: Print JaCoCo report
         run: cat target/site/jacoco/jacoco.xml
