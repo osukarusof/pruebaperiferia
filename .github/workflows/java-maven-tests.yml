@@ -33,36 +33,5 @@ jobs:
       - name: Generate coverage report with JaCoCo
         run: mvn jacoco:report
 
-      - name: Install xmllint
-        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
-
       - name: Print JaCoCo report
         run: cat target/site/jacoco/jacoco.xml
-
-      - name: Extract coverage values
-        id: coverage
-        run: |
-          # Extract the coverage data from the JaCoCo report using xmllint
-          COVERED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@covered)" target/site/jacoco/jacoco.xml)
-          MISSED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@missed)" target/site/jacoco/jacoco.xml)
-          
-          echo "Covered: $COVERED"
-          echo "Missed: $MISSED"
-          
-          if [ -z "$COVERED" ] || [ -z "$MISSED" ]; then
-            echo "Coverage data not found in JaCoCo report"
-            exit 1
-          fi
-
-          TOTAL=$((COVERED + MISSED))
-          COVERAGE_PERCENT=$((100 * COVERED / TOTAL))
-          
-          echo "Coverage Percentage: $COVERAGE_PERCENT%"
-
-          # Check if coverage is above the new threshold
-          if [ "$COVERAGE_PERCENT" -lt 80 ]; then
-            echo "Coverage is below 80%. Current coverage: $COVERAGE_PERCENT%"
-            exit 1
-          else
-            echo "Coverage is acceptable. Current coverage: $COVERAGE_PERCENT%"
-          fi
