@@ -4,7 +4,7 @@ import com.periferia.mutant.dto.MutantDto;
 import com.periferia.mutant.utils.ApiResponseUtil;
 
 public interface MutantService {
-    ApiResponseUtil<Object> mutant (MutantDto mutantDto);
+    ApiResponseUtil<Object> isMutant (MutantDto mutantDto);
 
-    ApiResponseUtil<Object> isMutant ();
+    ApiResponseUtil<Object> isMutantCalculate ();
 }

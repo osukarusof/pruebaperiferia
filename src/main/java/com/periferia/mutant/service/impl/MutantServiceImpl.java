@@ -33,7 +33,7 @@ public class MutantServiceImpl implements MutantService {
 
     @Override
     @CacheEvict(value = "mutantStats", allEntries = true)
-    public ApiResponseUtil<Object> mutant (MutantDto mutantDto) {
+    public ApiResponseUtil<Object> isMutant (MutantDto mutantDto) {
 
         String dnaJson = util.arrayConverToJson(mutantDto.getDna());
         Optional<MutantEntity> mutantOpt = mutantRepository.findByDnaSequence(dnaJson);
@@ -58,7 +58,7 @@ public class MutantServiceImpl implements MutantService {
 
     @Override
     @Cacheable("mutantStats")
-    public ApiResponseUtil<Object> isMutant () {
+    public ApiResponseUtil<Object> isMutantCalculate () {
 
         logger.info("isMutant method called, cache is being used");
         Optional<IsMutantCalculate> isMutantCalculateOpt = mutantRepository.getMutantCalculate();

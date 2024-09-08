@@ -42,41 +42,41 @@ public class MutantServiceTest {
 
 
     @Test
-    public void mutantExistErrorNotFout () {
+    public void isMutantExistErrorNotFound () {
         insertDb();
         when(mutantRepository.findByDnaSequence(anyString())).thenReturn(Optional.of(mutantEntity));
         String[] dna = { "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG" };
         MutantDto body = MutantDto.builder().dna(dna).build();
-        assertThrows(NotFoundException.class, () -> mutantService.mutant(body));
+        assertThrows(NotFoundException.class, () -> mutantService.isMutant(body));
     }
 
     @Test
-    public void  mutantIsNotMutantErrorForbiddenException () {
+    public void  isMutantNotMutantErrorForbiddenException () {
         when(mutantRepository.findByDnaSequence(anyString())).thenReturn(Optional.empty());
         String[] dna = {"ATCGTA", "GCTGAC", "TACGTT", "CGTACG", "AGCTGA", "TGATCG"};
         MutantDto body = MutantDto.builder().dna(dna).build();
-        assertThrows(ForbiddenException.class, () -> mutantService.mutant(body));
+        assertThrows(ForbiddenException.class, () -> mutantService.isMutant(body));
     }
 
     @Test
-    public void mutantIsMutant () {
+    public void isMutant () {
         insertDb();
         when(mutantRepository.findByDnaSequence(anyString())).thenReturn(Optional.empty());
         String[] dna = { "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG" };
         MutantDto body = MutantDto.builder().dna(dna).build();
         when(mutantRepository.save(any())).thenReturn(mutantEntity);
         String dnaJson = util.arrayConverToJson(dna);
-        assertEquals(util.mapaRespuesta(MutantDto.builder().dna(util.jsonConverToArray(dnaJson)).build()), mutantService.mutant(body));
+        assertEquals(util.mapaRespuesta(MutantDto.builder().dna(util.jsonConverToArray(dnaJson)).build()), mutantService.isMutant(body));
     }
 
     @Test
     public void isMutantErorNotFountException () {
         when(mutantRepository.getMutantCalculate()).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> mutantService.isMutant());
+        assertThrows(NotFoundException.class, () -> mutantService.isMutantCalculate());
     }
 
     @Test
-    public void isMutant () {
+    public void isMutantCalculate () {
 
         IsMutantCalculate isMutantCalculate = new IsMutantCalculate() {
             @Override
@@ -96,7 +96,7 @@ public class MutantServiceTest {
         };
 
         when(mutantRepository.getMutantCalculate()).thenReturn(Optional.of(isMutantCalculate));
-        assertEquals(util.mapaRespuesta(util.convertTo(isMutantCalculate, IsMutantDto.class)), mutantService.isMutant());
+        assertEquals(util.mapaRespuesta(util.convertTo(isMutantCalculate, IsMutantDto.class)), mutantService.isMutantCalculate());
     }
 
 

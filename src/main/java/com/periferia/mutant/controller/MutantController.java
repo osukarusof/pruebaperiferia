@@ -36,8 +36,8 @@ public class MutantController {
                     content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/mutant")
-    public ResponseEntity<ApiResponseUtil<Object>> mutant (@RequestBody @Valid  MutantDto mutantDto) {
-        return new ResponseEntity<ApiResponseUtil<Object>>(mutantService.mutant(mutantDto), HttpStatus.OK);
+    public ResponseEntity<ApiResponseUtil<Object>> isMutant (@RequestBody @Valid  MutantDto mutantDto) {
+        return new ResponseEntity<ApiResponseUtil<Object>>(mutantService.isMutant(mutantDto), HttpStatus.OK);
     }
 
     @Operation(summary = "Nos permite realizar el cálculo para obtener las estadísticas de todas las cadenas de ADN")
@@ -54,6 +54,6 @@ public class MutantController {
     })
     @GetMapping("/status")
     public ResponseEntity<ApiResponseUtil<Object>> mutantStatus() {
-        return new ResponseEntity<>(mutantService.isMutant(), HttpStatus.OK);
+        return new ResponseEntity<>(mutantService.isMutantCalculate(), HttpStatus.OK);
     }
 }
